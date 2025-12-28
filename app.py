@@ -72,24 +72,9 @@ except Exception:
   use_db = False
 
 
-@app.route('/')
-def home():
-  # Check if splash screen was already shown
-  splash_done = request.args.get('splash')
-  if not splash_done:
-    return render_template('splash.html')
-  
-  users = []
-  total_balance = '0.00'
-  if use_db:
-    try:
-      users = User.query.all()
-      total = sum([float(u.balance) if u.balance is not None else 0 for u in users])
-      total_balance = f"{total:,.2f}"
-    except Exception:
-      users = []
-      total_balance = '0.00'
-  return render_template('project.html', users=users, total_balance=total_balance)
+git add app.py
+git commit -m "Remove splash screen to fix template error"
+git push
 
 
 @app.route('/project')
@@ -421,4 +406,5 @@ def add_header_no_cache(response):
       response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
   except Exception:
     pass
+
   return response
