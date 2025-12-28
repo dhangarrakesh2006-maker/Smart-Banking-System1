@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../main.html/favicon.png" type="image/x-icon">
+  <title>Your Account</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="../main/favicon.png" alt="">
+      <span>Smart Banking</span>
+    </div>
+    <nav>
+      <ul>
+        <li class="active">Accounts</li>
+        <li><a href="./Transaction/index.html">Transaction</a></li>
+        <li>Pay Bills</li>
+        <li>Pay People</li>
+        <li>Notifications</li>
+      </ul>
+    </nav>
+    <div class="top-links">
+      <a href="#">Mobile</a>
+      <a href="#">Activity</a>
+      <a href="#">Settings</a>
+      <a href="../main.html/project.html ">Log out</a>
+    </div>
+  </header>
+
+  <!-- Welcome Message -->
+  <section class="welcome">
+    <p>Welcome, <strong id="userName">Loading...</strong>. 
+        <p>Your last login was <strong id="lastLogin">10/10/2025 10:02 AM</strong>. At Shirpur Dist-Dhule</p>
+  </section>
+
+  <!-- Accounts Section -->
+  <section class="accounts">
+    <h2>Accounts</h2>
+    <div class="account-cards">
+      <div class="card">
+        <h3>Smart Banking</h3>
+        <p class="account-number">**** **** 5987</p>
+        <h1 id="balance">₹10,250.00</h1>
+        <p class="balance">Available Balance</p>
+        <p class="small" id="currentBalance">Current Balance ₹10,250.00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Bills and Services -->
+  <section class="bills-services">
+    <div class="bills">
+      <h2>Upcoming Bills</h2>
+      <label>Next 7 days</label>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount Due</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4">No bills are due within the timeframe you have selected.</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="#">Pay and Bill</a>
+    </div>
+    <div class="services">
+      <h2>Services</h2>
+      <div class="service-box">
+        <a href="#">Open a New Checking or Money Market Account</a><br><br>
+        <a href="#">Apply for a Loan</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="loader-container">
+    <img src="./loader.gif" alt="">
+    <p>We are redirecting to your page, please wait...</p>
+
+   </div>
+
+   <script src="./script.js"></script>
+</body>
+</html>
