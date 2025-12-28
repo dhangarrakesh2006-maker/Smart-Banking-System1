@@ -72,11 +72,6 @@ except Exception:
   use_db = False
 
 
-git add app.py
-git commit -m "Remove splash screen to fix template error"
-git push
-
-
 @app.route('/project')
 def project():
   return render_template('project.html')
@@ -408,3 +403,4 @@ def add_header_no_cache(response):
     pass
 
   return response
+
