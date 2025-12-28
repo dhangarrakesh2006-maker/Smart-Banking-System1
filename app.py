@@ -406,9 +406,11 @@ def add_header_no_cache(response):
 @app.route("/")
 def home():
     return "Smart Banking System is running successfully"
-  git add app.py
-git commit -m "Add home route to fix 404 error"
-git push origin main
+
+if __name__ == "__main__":
+    app.run()
+
+  
 
 
 
