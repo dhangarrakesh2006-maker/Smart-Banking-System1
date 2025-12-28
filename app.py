@@ -403,14 +403,15 @@ def add_header_no_cache(response):
     pass
 
   return response
+from flask import render_template
+
 @app.route("/")
 def home():
-    return "Smart Banking System is running successfully"
+    return render_template("project.html")
 
-if __name__ == "__main__":
-    app.run()
 
   
+
 
 
 
