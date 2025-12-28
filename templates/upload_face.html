@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Upload face</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='project.css') }}">
+</head>
+<body>
+  <div class="container" style="padding:24px">
+    <h2>Upload face for {{ user.name }}</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for cat, msg in messages %}
+          <li class="{{ cat }}">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field">
+        <label for="face">Choose face image (jpg/png)</label>
+        <input type="file" name="face" id="face" accept="image/png, image/jpeg" required>
+      </div>
+      <div class="row">
+        <button class="btn" type="submit">Upload</button>
+        <a class="link" href="{{ url_for('home') }}">Skip</a>
+      </div>
+    </form>
+
+    {% if user.face_filename %}
+      <h4>Current face image</h4>
+      <img src="{{ url_for('static', filename='uploads/' ~ user.face_filename) }}" alt="face" style="max-width:240px;border-radius:8px;border:1px solid #ddd">
+    {% endif %}
+  </div>
+</body>
+</html>
