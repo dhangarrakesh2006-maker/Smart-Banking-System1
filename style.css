@@ -1,0 +1,180 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: #ff6d00;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+nav li {
+  cursor: pointer;
+  padding: 8px 15px;
+}
+
+nav li.active {
+  background-color: #ff6d00;
+  border-radius: 4px;
+}
+
+.top-links a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* WELCOME */
+.welcome {
+  background-color: #f1f3f6;
+  padding: 10px 30px;
+  font-size: 15px;
+}
+
+/* ACCOUNTS */
+.accounts {
+  padding: 30px;
+}
+
+.accounts h2 {
+  color: #ff6d00;
+  margin-bottom: 20px;
+}
+
+.account-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  border-radius: 6px;
+  padding: 20px;
+  flex: 1;
+  min-width: 250px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.card h1 {
+  color: #ff6d00;
+  margin: 10px 0;
+}
+
+.balance {
+  color: #0050a0;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.small {
+  color: gray;
+  font-size: 13px;
+}
+
+/* BILLS & SERVICES */
+.bills-services {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  gap: 40px;
+}
+
+.bills, .services {
+  flex: 1;
+}
+
+.bills h2, .services h2 {
+  color: #ff6d00;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin: 10px 0;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+table th {
+  background-color: #f8f8f8;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.service-box {
+  background: white;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.loader-container{
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.loader-container img{
+  width: 3rem;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader-container p{
+  align-items: center;
+}
+
+.loader-container.fade-out{
+  top: 110%;
+  opacity: 0;
+}

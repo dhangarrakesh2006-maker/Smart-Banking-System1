@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='project.css') }}">
+  <script src="{{ url_for('static', filename='project.js') }}" defer></script>
+  <style> .container{max-width:600px;margin:24px auto} </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create account</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for cat, msg in messages %}
+          <li class="{{ cat }}">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required>
+      </div>
+      <div class="field">
+        <label for="balance">Initial balance (optional)</label>
+        <input id="balance" name="balance" type="number" min="0" step="0.01">
+      </div>
+      <div class="row">
+        <button class="btn" type="submit">Create account</button>
+        <a class="link" href="{{ url_for('home') }}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

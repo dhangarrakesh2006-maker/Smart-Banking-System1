@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='project.css') }}">
+</head>
+<body>
+  <div class="container" style="padding:24px">
+    <h2>Welcome, {{ user.name }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Balance:</strong> ₹ {{ '{:,.2f}'.format(float(user.balance or 0)) }}</p>
+    {% if user.face_filename %}
+      <p><strong>Face image:</strong></p>
+      <img src="{{ url_for('static', filename='uploads/' + user.face_filename) }}" alt="Face" style="max-width:240px;border-radius:8px;border:1px solid #ddd" />
+    {% else %}
+      <p class="muted">No face image uploaded. <a href="{{ url_for('upload_face', user_id=user.id) }}">Upload now</a></p>
+    {% endif %}
+
+    <p style="margin-top:16px"><a href="{{ url_for('logout') }}">Logout</a></p>
+  </div>
+</body>
+</html>

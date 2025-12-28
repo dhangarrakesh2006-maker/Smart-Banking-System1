@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Banking</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="description" content="Educational banking website frontend (ICICI-style) – demo with Flask." />
+  <link rel="stylesheet" href="{{ url_for('static', filename='project.css') }}">
+  <script src="{{ url_for('static', filename='project.js') }}" defer></script>
+</head>
+<body>
+
+  {%- with messages = get_flashed_messages(with_categories=true) -%}
+    {%- if messages -%}
+      <div style="padding:8px;max-width:900px;margin:12px auto;">
+        {%- for cat, msg in messages -%}
+          <div class="flash {{ cat }}" style="padding:8px;border-radius:6px;margin-bottom:6px;background:#fff;text-align:left">{{ msg }}</div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- endwith -%}
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container row">
+      <div></div>
+      <div>
+        <label for="langSel" style="margin-right:6px">🌐</label>
+        <select id="langSel" onchange="switchLang()" style="padding:3px 6px;border-radius:6px;border:1px solid #cbd5e1">
+          <option value="en">English</option>
+          <option value="mr">Marathi</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="container nav-wrap">
+      <a class="brand" href="#">
+        <span class="mark" aria-hidden="true"></span>
+        <span>SmartBank</span>
+        <span class="badge">Demo</span>
+      </a>
+
+      <button class="hamburger" aria-label="Menu" onclick="toggleMobile()">☰</button>
+
+      <nav class="nav-links" id="navLinks">
+        <div class="menu">
+          <a href="#">Accounts</a>
+          <div class="mega" role="menu">
+            <div class="mega-grid">
+              <div>
+                <h4>Savings</h4>
+                <a class="item" href="#"><span class="icon">S</span><div><strong>Regular Savings</strong><div class="muted">Free UPI • Rupay card</div></div></a>
+                <a class="item" href="#"><span class="icon">N</span><div><strong>Salary Account</strong><div class="muted">Zero balance</div></div></a>
+              </div>
+              <div>
+                <h4>Deposits</h4>
+                <a class="item" href="#"><span class="icon">F</span><div><strong>Fixed Deposit</strong><div class="muted">Up to 7.25% p.a.</div></div></a>
+                <a class="item" href="#"><span class="icon">R</span><div><strong>Recurring Deposit</strong><div class="muted">Auto-debit</div></div></a>
+              </div>
+              <div>
+                <h4>Cards</h4>
+                <a class="item" href="#"><span class="icon">C</span><div><strong>Credit Cards</strong><div class="muted">Cashback & rewards</div></div></a>
+                <a class="item" href="#"><span class="icon">D</span><div><strong>Debit Cards</strong><div class="muted">Global usage</div></div></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu">
+          <a href="#">Loans</a>
+          <div class="mega" role="menu">
+            <div class="mega-grid">
+              <div>
+                <h4>Retail</h4>
+                <a class="item" href="#"><span class="icon">H</span><div><strong>Home Loan</strong><div class="muted">Starting 8.5% p.a.</div></div></a>
+                <a class="item" href="#"><span class="icon">A</span><div><strong>Auto Loan</strong><div class="muted">Flexible tenure</div></div></a>
+              </div>
+              <div>
+                <h4>Education & Personal</h4>
+                <a class="item" href="#"><span class="icon">E</span><div><strong>Education Loan</strong><div class="muted">Top institutes</div></div></a>
+                <a class="item" href="#"><span class="icon">P</span><div><strong>Personal Loan</strong><div class="muted">Instant approval</div></div></a>
+              </div>
+              <div>
+                <h4>Business</h4>
+                <a class="item" href="#"><span class="icon">B</span><div><strong>MSME Loan</strong><div class="muted">Collateral-free</div></div></a>
+                <a class="item" href="#"><span class="icon">T</span><div><strong>Trade Finance</strong><div class="muted">LC / BG</div></div></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#offers">Offers</a>
+        <a href="#support">Support</a>
+  <button id="internetBtn" class="btn ghost" onclick="scrollToLogin()">Internet Banking</button>
+  <button id="openAccountBtn" class="btn">Open Account</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="badge" style="background:#fff7ed;color:#9a3412;border:1px solid #fdba74">New</p>
+  <h1 id="heroTitle">Smart banking for everyday India</h1>
+  <p id="heroSubtitle">Accounts, cards, payments, deposits and loans — all in one secure dashboard. No backend here, this is a purely front-end educational demo.</p>
+        <div class="row" style="gap:12px">
+          <button class="btn" onclick="alert('Demo – no backend')">Get Started</button>
+          <button class="btn ghost" onclick="document.getElementById('learn').scrollIntoView({behavior:'smooth'})">Learn More</button>
+        </div>
+        <p class="muted" style="margin-top:10px">UPI • IMPS • NEFT • BillPay • FASTag • Cards</p>
+      </div>
+
+      <div class="card login" id="loginBox" aria-label="Internet Banking Login">
+        <h3>Internet Banking Login</h3>
+        <form method="post" action="/login">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="field">
+            <label id="labelEmail" for="email">Email</label>
+            <input id="email" name="email" type="text" placeholder="Enter email or user id" />
+          </div>
+          <div class="field">
+            <label id="labelPassword" for="password">Password / MPIN</label>
+            <input id="password" name="password" type="password" placeholder="••••••••" />
+            <small><a class="link" href="#">Forgot?</a></small>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" type="submit">Login</button>
+            <a class="btn" href="/register">Register</a>
+          </div>
+        </form>
+        <div style="margin-top:8px">
+          <a href="https://webcamtests.com/"><button><b><u>Face recognition</u></b></button></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Offers carousel -->
+  <section class="section" id="offers">
+    <div class="container">
+      <div class="carousel card">
+        <div class="track" id="track">
+          <div class="slide">
+            <h3>Credit Card Fest</h3>
+            <p>Up to 5% cashback on groceries & fuel. <span class="tag">Limited</span></p>
+          </div>
+          <div class="slide">
+            <h3>Home Loan Days</h3>
+            <p>Interest rates starting at 8.5% p.a. + zero processing fee*</p>
+          </div>
+          <div class="slide">
+            <h3>FD Booster</h3>
+            <p>Senior citizens get +0.50% extra on FDs</p>
+          </div>
+        </div>
+      </div>
+      <div class="dots">
+        <button class="dot active" onclick="goTo(0)"></button>
+        <button class="dot" onclick="goTo(1)"></button>
+        <button class="dot" onclick="goTo(2)"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section" id="learn">
+    <div class="container">
+      <h2 style="margin:0 0 12px">Popular Products</h2>
+      <div class="cards">
+        <div class="card product">
+          <h3>Savings Account <span class="tag">Zero Balance</span></h3>
+          <p class="muted">UPI, cheque book, free online transfers.</p>
+          <ul>
+            <li>Instant virtual debit card</li>
+            <li>Free email alerts</li>
+            <li>UPI AutoPay support</li>
+          </ul>
+          <div class="row" style="margin-top:10px">
+            <button class="btn">Open Now</button>
+            <button class="btn ghost">Know More</button>
+          </div>
+        </div>
+
+        <div class="card product">
+          <h3>Credit Cards</h3>
+          <p class="muted">Cashback, travel & lifestyle benefits.</p>
+          <ul>
+            <li>EMI on call</li>
+            <li>Fuel surcharge waiver</li>
+            <li>Tap to Pay</li>
+          </ul>
+          <div class="row" style="margin-top:10px">
+            <button class="btn">Apply</button>
+            <button class="btn ghost">Compare</button>
+          </div>
+        </div>
+
+        <div class="card product">
+          <h3>Fixed Deposits</h3>
+          <p class="muted">Safe & predictable returns.</p>
+          <ul>
+            <li>Flexible tenures</li>
+            <li>Premature withdrawal option</li>
+            <li>Auto-renewal</li>
+          </ul>
+          <div class="row" style="margin-top:10px">
+            <button class="btn">Book FD</button>
+            <button class="btn ghost">Rates</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section class="section" id="support">
+    <div class="container cards">
+      <div class="card product">
+        <h3>Block Card</h3>
+        <p class="muted">Lost your card? Temporarily block it.</p>
+        <div class="row"><input id="cardno" placeholder="**** **** **** 1234" style="padding:12px;border:1px solid #cbd5e1;border-radius:12px;flex:1" />
+          <button class="btn" onclick="alert('Card blocked temporarily')">Block</button></div>
+      </div>
+      <div class="card product">
+        <h3>Dispute a Transaction</h3>
+        <p class="muted">Raise a complaint for an incorrect debit.</p>
+        <button class="btn" onclick="alert('Demo: ticket #D'+Math.floor(Math.random()*99999))">Raise Ticket</button>
+      </div>
+      <div class="card product">
+        <h3>Branch / ATM Locator</h3>
+        <p class="muted">Find nearby branches & ATMs.</p>
+        <div class="row"><input id="loc" placeholder="Enter city or pincode" style="padding:12px;border:1px solid #cbd5e1;border-radius:12px;flex:1" />
+          <button class="btn" onclick="fakeLocate()">Search</button></div>
+        <ul id="locList" class="muted" style="margin-top:10px"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div>
+        <div class="brand" style="color:#fff"><span class="mark"></span></div>
+        <p class="muted"></p>
+      </div>
+      <div>
+        <h4>Banking</h4>
+        <p><a href="#">Savings</a></p>
+        <p><a href="#">Deposits</a></p>
+        <p><a href="#">Cards</a></p>
+      </div>
+      <div>
+        <h4>Loans</h4>
+        <p><a href="#">Home</a></p>
+        <p><a href="#">Car</a></p>
+        <p><a href="#">Personal</a></p>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <p><a href="#">Help Center</a></p>
+        <p><a href="#">Security Tips</a></p>
+        <p><a href="#">Report Fraud</a></p>
+      </div>
+    </div>
+    <div class="container copyright"></div>
+  </footer>
+
+</body>
+</html>
